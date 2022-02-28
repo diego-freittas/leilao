@@ -15,6 +15,8 @@ import org.springframework.test.context.ActiveProfiles;
 import br.com.alura.leilao.model.Leilao;
 import br.com.alura.leilao.model.Usuario;
 import br.com.alura.leilao.ultil.JPAUtil;
+import br.com.alura.leilao.ultil.builder.LeilaoBuilder;
+import br.com.alura.leilao.ultil.builder.UsuarioBuilder;
 
 @ActiveProfiles("test") 
 class LeilaoDaoTest {
@@ -23,16 +25,27 @@ class LeilaoDaoTest {
 	private EntityManager em;
 	Usuario usuario;
 	private Leilao leilao;
-	
-	//private EntityManager em;
-	
+		
 	@BeforeEach
 	public void beforeEach() {
 		em = JPAUtil.getEntityManager();
 		this.dao = new LeilaoDao(em);
 		em.getTransaction().begin();
-		usuario = criarUsuarioEPersiste();
-		leilao = new Leilao("Mochila", new BigDecimal("70"), LocalDate.now(),usuario);
+		
+		usuario = new UsuarioBuilder()
+				.nome("fulano")
+				.email("fulano@email.com")
+				.senha("123")
+				.criar();
+		
+		em.persist(usuario);
+		
+		leilao = new LeilaoBuilder()
+				.nome("Mochila")
+				.valorInicial("70")
+				.data(LocalDate.now())
+				.usuario(usuario)
+				.criar();
 	}
 	
 	@AfterEach
@@ -60,10 +73,5 @@ class LeilaoDaoTest {
 
 	}
 	
-	private Usuario criarUsuarioEPersiste() {
-		Usuario usuario = new Usuario("fulano", "fulano@email.com", "123");
-		em.persist(usuario);
-		return usuario;
-	}
 
 }
