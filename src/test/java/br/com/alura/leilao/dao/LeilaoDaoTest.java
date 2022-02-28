@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;

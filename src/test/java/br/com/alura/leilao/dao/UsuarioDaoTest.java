@@ -12,7 +12,6 @@ import org.springframework.test.context.ActiveProfiles;
 import br.com.alura.leilao.model.Usuario;
 import br.com.alura.leilao.ultil.JPAUtil;
 
-@ActiveProfiles("test") 
 class UsuarioDaoTest {
 	
 	private UsuarioDao dao;
@@ -33,10 +32,10 @@ class UsuarioDaoTest {
 	}
 
 	@Test
-	void deveriaCadastrarUmLeilao() {
+	void deveriaCadastrarUmUsuario() {
 		Usuario usuario = criarUsuarioEPersiste();
 		
-		Usuario usuarioDoBanco = this.dao.buscarPorUsername(criarUsuarioEPersiste().getNome());
+		Usuario usuarioDoBanco = this.dao.buscarPorUsername(usuario.getNome());
 		Assert.assertNotNull(usuarioDoBanco);
 	}
 	
